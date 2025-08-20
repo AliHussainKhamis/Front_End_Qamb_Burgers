@@ -10,6 +10,7 @@ import CheckoutPage from "./pages/CheckoutPage.jsx"
 import OrdersPage from "./pages/OrdersPage.jsx"
 import LoginPage from "./pages/LoginPage.jsx"
 import SignupPage from "./pages/SignupPage.jsx"
+import AdminCreateMenuItem from "./pages/AdminCreateMenuItem.jsx"
 
 export default function App() {
   return (
@@ -52,6 +53,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <OrdersPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/new-menu"
+          element={
+            <ProtectedRoute>
+              <AdminCreateMenuItem />
             </ProtectedRoute>
           }
         />

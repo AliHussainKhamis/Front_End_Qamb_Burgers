@@ -5,11 +5,7 @@ import { clearToken, getToken } from "../lib/auth"
 export default function Layout() {
   const navigate = useNavigate()
   const loggedIn = !!getToken()
-
-  function handleLogout() {
-    clearToken()
-    navigate("/login")
-  }
+  function onLogout() { clearToken(); navigate("/login") }
 
   return (
     <div>
@@ -19,14 +15,8 @@ export default function Layout() {
         <Link to="/cart">Cart</Link>{" | "}
         <Link to="/checkout">Checkout</Link>{" | "}
         <Link to="/orders">Orders</Link>{" | "}
-        {!loggedIn ? (
-          <>
-            <Link to="/login">Login</Link>{" | "}
-            <Link to="/signup">Signup</Link>
-          </>
-        ) : (
-          <button onClick={handleLogout}>Logout</button>
-        )}
+        <Link to="/admin/new-menu">New Item</Link>{" | "}
+        {loggedIn ? <button onClick={onLogout}>Logout</button> : <Link to="/login">Login</Link>}
       </nav>
       <Outlet />
     </div>

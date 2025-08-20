@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <footer>
-      <p>burgerhouse @ {new Date().getFullYear()}</p>
+      <p>Qamb Burger @ {new Date().getFullYear()}</p>
       <p>MADE WITH LOVE BY QAMB TEAM</p>
     </footer>
   )

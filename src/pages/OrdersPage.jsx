@@ -1,27 +1,34 @@
-import { useEffect, useState } from 'react'
-import { listOrders } from '../lib/api'
+// src/pages/OrdersPage.jsx
+import { useEffect, useState } from "react"
+import { listOrders } from "../lib/api"
 
-function OrdersPage() {
-  const [rows, setRows] = useState([])
+export default function OrdersPage() {
+  const [orders, setOrders] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  async function load() {
-    const res = await listOrders()
-    setRows(res.data || [])
-  }
+  useEffect(() => {
+    listOrders().then(res => setOrders(res.data||[])).finally(()=>setLoading(false))
+  }, [])
 
-  useEffect(() => { load() }, [])
+  if (loading) return <p>Loading...</p>
+  if (!orders.length) return <p>No orders yet.</p>
 
   return (
     <div>
       <h2>Orders</h2>
-      {rows.length ? rows.map(o => (
-        <div key={o._id}>
-          <div>id: {o._id}</div>
-          <div>user: {o.user}</div>
-          <div>total: {o.total}</div>
-        </div>
-      )) : <p>No orders</p>}
+      <ul>
+        {orders.map(o => (
+          <li key={o._id} style={{ listStyle:"none" }}>
+            #{o._id} — {new Date(o.createdAt).toLocaleString()}
+            <div>
+              {o.items?.map((it, idx) => (
+                <div key={idx}>{it.name} x {it.qty} = {(it.price*it.qty).toFixed(2)}</div>
+              ))}
+            </div>
+            <strong>Total: {Number(o.total).toFixed(2)}</strong>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
-export default OrdersPage
