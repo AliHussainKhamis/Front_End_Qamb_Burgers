@@ -1,4 +1,4 @@
-// src/pages/OrdersPage.jsx
+
 import { useEffect, useState } from "react"
 import { listOrders } from "../lib/api"
 
@@ -11,7 +11,7 @@ export default function OrdersPage() {
   }, [])
 
   if (loading) return <p>Loading...</p>
-  if (!orders.length) return <p>No orders yet.</p>
+  if (!orders.length) return <p>No orders yet</p>
 
   return (
     <div>

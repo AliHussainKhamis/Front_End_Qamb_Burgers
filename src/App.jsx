@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom"
 import Layout from "./components/Layout.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
 
+
 import HomePage from "./pages/HomePage.jsx"
 import MenuPage from "./pages/MenuPage.jsx"
 import CartPage from "./pages/CartPage.jsx"

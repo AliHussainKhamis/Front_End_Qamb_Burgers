@@ -1,4 +1,5 @@
-// src/pages/LoginPage.jsx
+import "./styles1.css"
+
 import { useState } from "react"
 import { login } from "../lib/api"
 import { setToken } from "../lib/auth"
@@ -17,20 +18,22 @@ export default function LoginPage() {
       const res = await login(form)
       setToken(res.data.token)
       navigate("/menu")
-    } catch (e) {
+    } catch {
       alert("Invalid credentials")
     } finally { setBusy(false) }
   }
 
   return (
-    <div>
-      <h2>Login</h2>
+    <section className="filter-bar">
+      <h3 className="mb-3">Login</h3>
       <form onSubmit={onSubmit}>
-        <input name="username" placeholder="username" value={form.username} onChange={e=>setForm({...form,[e.target.name]:e.target.value})}/>
-        <input name="password" type="password" placeholder="password" value={form.password} onChange={e=>setForm({...form,[e.target.name]:e.target.value})}/>
-        <button type="submit" disabled={busy}>{busy?"...":"Login"}</button>
+        <input className="mb-2" name="username" placeholder="username" value={form.username} onChange={e=>setForm({...form,[e.target.name]:e.target.value})}/>
+        <br />
+        <input className="mb-2" name="password" type="password" placeholder="password" value={form.password} onChange={e=>setForm({...form,[e.target.name]:e.target.value})}/>
+        <br />
+        <button type="submit" disabled={busy}>{busy ? "..." : "Login"}</button>
       </form>
-      <p>No account? <Link to="/signup">Signup</Link></p>
-    </div>
+      <p className="mt-3">No account? <Link to="/signup">Signup</Link></p>
+    </section>
   )
 }

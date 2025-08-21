@@ -1,4 +1,5 @@
-// src/pages/SignupPage.jsx
+import "./styles1.css"
+
 import { useState } from "react"
 import { signup } from "../lib/api"
 import { Link, useNavigate } from "react-router-dom"
@@ -22,14 +23,16 @@ export default function SignupPage() {
   }
 
   return (
-    <div>
-      <h2>Signup</h2>
+    <section className="filter-bar">
+      <h3 className="mb-3">Signup</h3>
       <form onSubmit={onSubmit}>
-        <input name="username" placeholder="username" value={form.username} onChange={e=>setForm({...form,[e.target.name]:e.target.value})}/>
-        <input name="password" type="password" placeholder="password" value={form.password} onChange={e=>setForm({...form,[e.target.name]:e.target.value})}/>
-        <button type="submit" disabled={busy}>{busy?"...":"Create"}</button>
+        <input className="mb-2" name="username" placeholder="username" value={form.username} onChange={e=>setForm({...form,[e.target.name]:e.target.value})}/>
+        <br />
+        <input className="mb-2" name="password" type="password" placeholder="password" value={form.password} onChange={e=>setForm({...form,[e.target.name]:e.target.value})}/>
+        <br />
+        <button type="submit" disabled={busy}>{busy ? "..." : "Create"}</button>
       </form>
-      <p>Have an account? <Link to="/login">Login</Link></p>
-    </div>
+      <p className="mt-3">Have an account? <Link to="/login">Login</Link></p>
+    </section>
   )
 }

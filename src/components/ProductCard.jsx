@@ -1,15 +1,17 @@
-// src/components/ProductCard.jsx
 export default function ProductCard({ item, onAdd }) {
   return (
-    <div>
-      {item.imageUrl ? <img src={item.imageUrl} alt={item.name} width="160" height="120" /> : null}
-      <div>{item.name}</div>
-      {item.description ? <div>{item.description}</div> : null}
-      <div>{Number(item.price).toFixed(2)}</div>
-      <button onClick={() => onAdd(item._id)}>Add</button>
-    </div>
+    <article className="photo-item">
+      {item.imageUrl ? (
+        <img src={item.imageUrl} alt={item.name} className="photo-placeholder" style={{ objectFit: "cover" }} />
+      ) : (
+        <div className="photo-placeholder">No image</div>
+      )}
+      <div className="photo-content">
+        <div className="photo-title">{item.name}</div>
+        {item.description ? <p className="photo-description mb-2">{item.description}</p> : null}
+        <div className="mb-3"><strong>${Number(item.price).toFixed(2)}</strong></div>
+        <button onClick={() => onAdd(item._id)}>Add</button>
+      </div>
+    </article>
   )
 }
-
-
-

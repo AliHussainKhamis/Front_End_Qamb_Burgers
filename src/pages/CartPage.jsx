@@ -1,4 +1,7 @@
-// src/pages/CartPage.jsx
+// Cart Page
+
+import "./styles1.css"
+
 import { useEffect, useMemo, useState } from "react"
 import { fetchCart, fetchMenu, addCartItem, removeCartLine, clearCart } from "../lib/api"
 
@@ -13,7 +16,7 @@ export default function CartPage() {
     setMenu(m.data || [])
   }
 
-  const priceMap = useMemo(() => {
+  const map = useMemo(() => {
     const m = {}; for (let i=0;i<menu.length;i++) m[menu[i]._id] = menu[i]; return m
   }, [menu])
 
@@ -26,36 +29,40 @@ export default function CartPage() {
   async function removeLine(id) { await removeCartLine(id); reload() }
   async function clearAll() { await clearCart(); reload() }
 
-  if (!cart) return <p>Loading...</p>
+  if (!cart) return <p className="text-center">Loading...</p>
 
   let subtotal = 0
   for (let i=0;i<(cart.items?.length||0);i++) {
     const line = cart.items[i]
-    const info = priceMap[line.menuItem] || { price:0, name:"Unknown" }
+    const info = map[line.menuItem] || { price:0, name:"Unknown", imageUrl:"" }
     subtotal += (info.price||0) * (line.quantity||1)
   }
 
   return (
-    <div>
-      <h2>Cart</h2>
+    <section className="filter-bar">
+      <h3 className="mb-3">Your Cart</h3>
       {cart.items?.length ? (
-        <ul>
-          {cart.items.map(line => {
-            const info = priceMap[line.menuItem] || { name:"Unknown", price:0, imageUrl:"" }
-            return (
-              <li key={line._id} style={{ listStyle:"none" }}>
-                {info.imageUrl ? <img src={info.imageUrl} alt={info.name} width="80"/> : null}
-                {info.name} — {info.price} × {line.quantity}{" "}
-                <button onClick={() => minus(line)}>-</button>
-                <button onClick={() => plus(line)}>+</button>
-                <button onClick={() => removeLine(line._id)}>Remove</button>
-              </li>
-            )
-          })}
-        </ul>
-      ) : <p>Empty</p>}
-      <div>Subtotal: {subtotal.toFixed(2)}</div>
-      <button onClick={clearAll} disabled={!cart.items?.length}>Clear</button>
-    </div>
+        <>
+          <ul style={{ listStyle: "none", padding: 0 }}>
+            {cart.items.map(line => {
+              const info = map[line.menuItem] || { name: "Unknown", price: 0, imageUrl: "" }
+              return (
+                <li key={line._id} className="mb-3">
+                  {info.imageUrl ? <img src={info.imageUrl} alt={info.name} width="80" style={{ verticalAlign: "middle", marginRight: 8 }} /> : null}
+                  <strong>{info.name}</strong> — ${info.price} × {line.quantity}{" "}
+                  <button onClick={() => minus(line)} className="mt-2">-</button>{" "}
+                  <button onClick={() => plus(line)} className="mt-2">+</button>{" "}
+                  <button onClick={() => removeLine(line._id)} className="mt-2">Remove</button>
+                </li>
+              )
+            })}
+          </ul>
+          <div className="mt-4"><strong>Subtotal: ${subtotal.toFixed(2)}</strong></div>
+          <button className="mt-3" onClick={clearAll}>Clear</button>
+        </>
+      ) : (
+        <p>Empty</p>
+      )}
+    </section>
   )
 }

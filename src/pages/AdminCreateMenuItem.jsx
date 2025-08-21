@@ -1,3 +1,5 @@
+import "./styles1.css"
+
 import { useState } from "react"
 import { uploadImage, createMenuItem } from "../lib/api"
 
@@ -22,11 +24,10 @@ export default function AdminCreateMenuItem() {
 
     setBusy(true)
     try {
-      // 1) upload the image to get a URL
+
       const up = await uploadImage(file)
       const imageUrl = up.data.url
 
-      // 2) create the menu item with that URL
       const payload = {
         name: form.name,
         price: Number(form.price),
@@ -37,12 +38,11 @@ export default function AdminCreateMenuItem() {
       const res = await createMenuItem(payload)
       alert("Menu created: " + res.data._id)
 
-      // reset
       setForm({ name: "", price: "", description: "", category: "" })
       setFile(null)
     } catch (err) {
       console.error(err?.response || err)
-      alert("Failed: " + (err?.response?.data?.message || err.message))
+      alert("Failed: " + err.message)
     } finally {
       setBusy(false)
     }
